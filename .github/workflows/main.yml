@@ -32,7 +32,7 @@ jobs:
       env:
             INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       with:
-            text: Nothing was committed!
+            text: Nothing was committed.
             
     - name: Slack Notification on FAILURE
       if: failure()
@@ -42,7 +42,7 @@ jobs:
       with:
             text: Something went wrong.
             attachments: |
-          [
+             [
                 {
                 "color": "bad",
                 "author_name": "${{ github.actor }}",
@@ -54,16 +54,17 @@ jobs:
                     }
                 ]
                 }
-            ] 
-- name: Slack Notification on no new commits
+                ] 
+                
+    - name: Slack Notification on no new commits
       if: (success() && steps.add_commit.outputs.committed=='true')
       uses: tokorom/action-slack-incoming-webhook@main
       env:
         INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       with:
-        text: New file alert! Yeah! Thanks, Iris and Aadit!
+        text: New file alert!
         attachments: |
-        [
+          [
             {
             "color": "good",
             "author_name": "${{ github.actor }}",
@@ -79,4 +80,5 @@ jobs:
                 }
             ]
             }
-        ] 
+          ] 
+                
